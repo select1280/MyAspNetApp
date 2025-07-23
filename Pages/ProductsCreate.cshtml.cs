@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyAspNetApp.Models;
 using MyAspNetApp.Service;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace MyAspNetApp.Pages
 {
@@ -26,12 +28,26 @@ namespace MyAspNetApp.Pages
             CategoryList = _categoryService.GetAll();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync(IFormFile? photo)
         {
+            CategoryList = _categoryService.GetAll();
+
             if (!ModelState.IsValid)
             {
-                CategoryList = _categoryService.GetAll(); // 若錯誤需再帶一次分類資料
                 return Page();
+            }
+
+            if (photo != null)
+            {
+                string fileName = Guid.NewGuid() + Path.GetExtension(photo.FileName);
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await photo.CopyToAsync(stream);
+                }
+
+                Product.ImageName = fileName;
             }
 
             _productService.Add(Product);

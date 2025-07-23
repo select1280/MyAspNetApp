@@ -4,25 +4,45 @@
 
 <h2>編輯商品</h2>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
+
     <input type="hidden" asp-for="Product.Id" />
+    <input type="hidden" asp-for="Product.ImageName" />
 
     <div class="mb-3">
-        <label asp-for="Product.Name">名稱</label>
+        <label>目前圖片：</label><br />
+        @if (!string.IsNullOrEmpty(Model.Product.ImageName))
+        {
+            <img src="~/images/@Model.Product.ImageName" style="height: 80px;" />
+        }
+        else
+        {
+            <span class="text-muted">尚無圖片</span>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label>更換圖片（可略過）</label>
+        <input type="file" class="form-control" name="photo" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label asp-for="Product.Name"></label>
         <input asp-for="Product.Name" class="form-control" />
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Product.Price">價格</label>
+    <div class="form-group mt-3">
+        <label asp-for="Product.Price"></label>
         <input asp-for="Product.Price" class="form-control" />
     </div>
 
-    <div class="mb-3">
+    <div class="form-group mt-3">
         <label asp-for="Product.CategoryId">分類</label>
-        <select asp-for="Product.CategoryId" class="form-select" asp-items="@(new SelectList(Model.CategoryList, "Id", "Name"))">
-            <option value="">-- 請選擇分類 --</option>
+        <select asp-for="Product.CategoryId" asp-items="@(new SelectList(Model.CategoryList, "Id", "Name"))"
+            class="form-control">
+            <option value="">請選擇</option>
         </select>
     </div>
 
-    <button type="submit" class="btn btn-success">儲存</button>
+    <button type="submit" class="btn btn-success mt-3">儲存</button>
 </form>

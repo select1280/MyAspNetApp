@@ -38,16 +38,39 @@ namespace MyAspNetApp.Pages
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync(IFormFile? photo)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) return Page();
+
+            // 如果有新圖片
+            if (photo != null)
             {
-                CategoryList = _categoryService.GetAll(); // ← Post 失敗時仍需載入分類
-                return Page();
+                // 刪除舊圖
+                if (!string.IsNullOrEmpty(Product.ImageName))
+                {
+                    var oldPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", Product.ImageName);
+                    if (System.IO.File.Exists(oldPath))
+                    {
+                        System.IO.File.Delete(oldPath);
+                    }
+                }
+
+                // 儲存新圖
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await photo.CopyToAsync(stream);
+                }
+
+                Product.ImageName = fileName;
             }
 
-            _productService.Update(Product);
+            _productService.Update(Product); // 更新至資料庫
             return RedirectToPage("/Products");
         }
+
+
     }
 }

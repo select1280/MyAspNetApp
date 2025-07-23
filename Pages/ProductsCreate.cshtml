@@ -5,7 +5,12 @@
 
 <h2>新增商品</h2>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label">商品圖片</label>
+        <input type="file" class="form-control" name="photo" />
+    </div>
+
     <div class="mb-3">
         <label asp-for="Product.Name">商品名稱</label>
         <input asp-for="Product.Name" class="form-control" />
@@ -18,7 +23,8 @@
 
     <div class="mb-3">
         <label asp-for="Product.CategoryId">分類</label>
-        <select asp-for="Product.CategoryId" class="form-select" asp-items="@(new SelectList(Model.CategoryList, "Id", "Name"))">
+        <select asp-for="Product.CategoryId" class="form-select"
+            asp-items="@(new SelectList(Model.CategoryList, "Id", "Name"))">
             <option value="">-- 請選擇分類 --</option>
         </select>
     </div>

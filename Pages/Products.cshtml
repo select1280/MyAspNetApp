@@ -13,6 +13,7 @@
     <thead>
         <tr>
             <th>編號</th>
+            <th>圖片</th>
             <th>名稱</th>
             <th>價格</th>
             <th>分類</th> @* ← 新增 *@
@@ -24,11 +25,17 @@
         {
             <tr>
                 <td>@p.Id</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(p.ImageName))
+                    {
+                        <img src="~/images/@p.ImageName" style="height: 50px;" />
+                    }
+                </td>
                 <td>@p.Name</td>
                 <td>@p.Price</td>
                 <td>@p.Category?.Name</td> @* ← 顯示分類名稱 *@
                 <td>
-                    <a class="btn btn-sm btn-primary" href="/ProductsEdit?id=@p.Id">編輯</a>
+                    <a class="btn btn-sm btn-primary" asp-page="/ProductsEdit" asp-route-id="@p.Id">編輯</a>
                     <a class="btn btn-sm btn-danger ms-2" href="/ProductsDelete?id=@p.Id">刪除</a>
                 </td>
             </tr>
