@@ -1,0 +1,33 @@
+@page
+@model MyAspNetApp.Pages.ProductsModel
+@{
+    Layout = null;
+}
+
+<h2>商品清單</h2>
+
+<a href="/ProductsCreate">新增商品</a>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>編號</th>
+            <th>名稱</th>
+            <th>價格</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.ProductList)
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.Name</td>
+                <td>@p.Price</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" href="/ProductsEdit?id=@p.Id">編輯</a>
+                    <a class="btn btn-sm btn-danger ms-2" href="/ProductsDelete?id=@p.Id">刪除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

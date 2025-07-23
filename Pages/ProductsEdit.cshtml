@@ -1,0 +1,20 @@
+@page
+@model MyAspNetApp.Pages.ProductsEditModel
+@{
+    Layout = null;
+}
+
+<h2>編輯商品</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Product.Id" />
+    <div class="mb-3">
+        <label>商品名稱</label>
+        <input asp-for="Product.Name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>價格</label>
+        <input asp-for="Product.Price" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">儲存</button>
+</form>
