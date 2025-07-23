@@ -13,8 +13,8 @@ namespace MyAspNetApp.Pages
         {
             if (account == "admin" && password == "1234")
             {
-                HttpContext.Session.SetString("User", account); // 記住登入帳號
-                return RedirectToPage("/Backend");              // 登入成功導向後台
+                HttpContext.Session.SetString("Username", account); // 記住登入帳號
+                return RedirectToPage("/Products");              // 登入成功導向後台
             }
             else
             {

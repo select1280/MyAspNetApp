@@ -7,8 +7,8 @@ namespace MyAspNetApp.Pages
     {
         public IActionResult OnGet()
         {
-            HttpContext.Session.Clear();        // 清除登入狀態
-            return RedirectToPage("/Login");
+            HttpContext.Session.Clear(); // 清除所有登入資訊
+            return RedirectToPage("/Login"); // 登出後回登入頁
         }
     }
 }

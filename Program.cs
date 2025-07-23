@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages(); // 加入 Razor Pages 功能
 builder.Services.AddSession();    // 加入 Session 服務
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<CategoryService>();
 
 // 加入 SQLite
 builder.Services.AddDbContext<AppDbContext>(options =>

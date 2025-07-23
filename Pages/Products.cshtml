@@ -1,7 +1,8 @@
 @page
+@using Microsoft.AspNetCore.Http
 @model MyAspNetApp.Pages.ProductsModel
 @{
-    Layout = null;
+
 }
 
 <h2>商品清單</h2>
@@ -14,6 +15,8 @@
             <th>編號</th>
             <th>名稱</th>
             <th>價格</th>
+            <th>分類</th> @* ← 新增 *@
+            <th>操作</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +26,7 @@
                 <td>@p.Id</td>
                 <td>@p.Name</td>
                 <td>@p.Price</td>
+                <td>@p.Category?.Name</td> @* ← 顯示分類名稱 *@
                 <td>
                     <a class="btn btn-sm btn-primary" href="/ProductsEdit?id=@p.Id">編輯</a>
                     <a class="btn btn-sm btn-danger ms-2" href="/ProductsDelete?id=@p.Id">刪除</a>

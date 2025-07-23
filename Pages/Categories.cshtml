@@ -1,0 +1,31 @@
+@page
+@model MyAspNetApp.Pages.CategoriesModel
+@{
+    ViewData["Title"] = "分類清單";
+}
+
+<h2>分類清單</h2>
+
+<a class="btn btn-success mb-3" href="/CategoriesCreate">新增分類</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>編號</th>
+            <th>名稱</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CategoryList)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+            </tr>
+            <td>
+                <a class="btn btn-sm btn-warning" href="/CategoriesEdit?id=@item.Id">編輯</a>
+                <a class="btn btn-sm btn-danger ms-2" href="/CategoriesDelete?id=@item.Id">刪除</a>
+            </td>
+        }
+    </tbody>
+</table>

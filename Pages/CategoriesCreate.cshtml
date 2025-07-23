@@ -1,0 +1,21 @@
+@page
+@model MyAspNetApp.Pages.CategoriesCreateModel
+@{
+    ViewData["Title"] = "新增分類";
+}
+
+<h2>新增分類</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Category.Name" class="form-label">分類名稱</label>
+        <input asp-for="Category.Name" class="form-control" />
+        <span asp-validation-for="Category.Name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">儲存</button>
+    <a asp-page="/Categories" class="btn btn-secondary ms-2">返回</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

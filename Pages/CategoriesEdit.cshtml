@@ -1,0 +1,17 @@
+@page
+@model MyAspNetApp.Pages.CategoriesEditModel
+
+<h2>編輯分類</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Category.Id" />
+
+    <div class="mb-3">
+        <label asp-for="Category.Name" class="form-label">分類名稱</label>
+        <input asp-for="Category.Name" class="form-control" />
+        <span asp-validation-for="Category.Name" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">儲存</button>
+    <a asp-page="/Categories" class="btn btn-secondary ms-2">取消</a>
+</form>

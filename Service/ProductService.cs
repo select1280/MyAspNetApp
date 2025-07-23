@@ -1,5 +1,7 @@
 using MyAspNetApp.Models;
 using MyAspNetApp.Data;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace MyAspNetApp.Service
 {
@@ -14,7 +16,7 @@ namespace MyAspNetApp.Service
 
         public List<Product> GetAll()
         {
-            return _context.Products.ToList();
+            return _context.Products.Include(p => p.Category).ToList();
         }
 
         public Product? GetById(int id)
@@ -42,6 +44,10 @@ namespace MyAspNetApp.Service
                 _context.Products.Remove(item);
                 _context.SaveChanges();
             }
+        }
+        public List<Product> GetAllWithCategory()
+        {
+            return _context.Products.Include(p => p.Category).ToList();
         }
     }
 }

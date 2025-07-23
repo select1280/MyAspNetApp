@@ -5,15 +5,15 @@ using MyAspNetApp.Service;
 
 namespace MyAspNetApp.Pages
 {
-    public class ProductsModel : PageModel
+    public class CategoriesModel : PageModel
     {
-        private readonly ProductService _productService;
+        private readonly CategoryService _service;
 
-        public List<Product> ProductList { get; set; }
+        public List<Category> CategoryList { get; set; }
 
-        public ProductsModel(ProductService productService)
+        public CategoriesModel(CategoryService service)
         {
-            _productService = productService;
+            _service = service;
         }
 
         public IActionResult OnGet()
@@ -22,9 +22,8 @@ namespace MyAspNetApp.Pages
             {
                 return RedirectToPage("/Login");
             }
-            // 注意：包含分類資訊
-            ProductList = _productService.GetAllWithCategory();
 
+            CategoryList = _service.GetAll();
             return Page();
         }
     }
