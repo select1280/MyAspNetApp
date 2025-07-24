@@ -31,7 +31,8 @@ namespace MyAspNetApp.Pages
                 Id = item.Id,
                 Name = item.Name,
                 Price = item.Price,
-                CategoryId = item.CategoryId
+                CategoryId = item.CategoryId,
+                ImageName = item.ImageName
             };
 
             CategoryList = _categoryService.GetAll(); // ← 載入分類
@@ -41,6 +42,10 @@ namespace MyAspNetApp.Pages
         public async Task<IActionResult> OnPostAsync(IFormFile? photo)
         {
             if (!ModelState.IsValid) return Page();
+
+            // 原始資料（從 DB 查）
+            var existing = _productService.GetById(Product.Id);
+            if (existing == null) return RedirectToPage("/Products");
 
             // 如果有新圖片
             if (photo != null)
@@ -63,11 +68,18 @@ namespace MyAspNetApp.Pages
                 {
                     await photo.CopyToAsync(stream);
                 }
-
-                Product.ImageName = fileName;
+                // 沒上傳圖片 → 保留舊圖
+                existing.ImageName = fileName;
             }
 
-            _productService.Update(Product); // 更新至資料庫
+            //更新 existing 實體上的屬性（EF 正在追蹤）
+            existing.Name = Product.Name;
+            existing.Price = Product.Price;
+            existing.CategoryId = Product.CategoryId;
+            existing.ImageName = Product.ImageName;
+
+            //儲存
+            _productService.Save(); // 改名為 Save() 或 SaveChanges()
             return RedirectToPage("/Products");
         }
 

@@ -2,7 +2,6 @@ using MyAspNetApp.Models;
 using MyAspNetApp.Data;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace MyAspNetApp.Service
 {
     public class ProductService
@@ -23,6 +22,10 @@ namespace MyAspNetApp.Service
         {
             return _context.Products.FirstOrDefault(p => p.Id == id);
         }
+        public void Save()
+        {
+            _context.SaveChanges(); // 已追蹤的物件就會自動更新
+        }
 
         public void Add(Product product)
         {
@@ -32,7 +35,6 @@ namespace MyAspNetApp.Service
 
         public void Update(Product product)
         {
-            _context.Products.Update(product);
             _context.SaveChanges();
         }
 
@@ -49,5 +51,7 @@ namespace MyAspNetApp.Service
         {
             return _context.Products.Include(p => p.Category).ToList();
         }
+
+       
     }
 }

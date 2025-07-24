@@ -26,6 +26,7 @@ namespace MyAspNetApp.Pages
         public void OnGet()
         {
             CategoryList = _categoryService.GetAll();
+            
         }
 
         public async Task<IActionResult> OnPostAsync(IFormFile? photo)
